@@ -7,9 +7,15 @@ import (
 	"strings"
 )
 
+type Location struct {
+	File               string
+	StartLine, EndLine int
+}
+
 type Snippet struct {
-	Name string
-	Code string
+	Name     string
+	Code     string
+	Location Location
 }
 
 type stackElement struct {
@@ -44,7 +50,13 @@ func Snippets(file string) (r []*Snippet, err error) {
 		if name, ok := snippetName(c); ok {
 			stack = append(stack, &stackElement{
 				startIndex: i,
-				snippet:    &Snippet{Name: name},
+				snippet: &Snippet{
+					Name: name,
+					Location: Location{
+						File:      file,
+						StartLine: i + 1,
+					},
+				},
 			})
 		}
 
@@ -59,6 +71,7 @@ func Snippets(file string) (r []*Snippet, err error) {
 					),
 					"\n",
 				)
+				last.snippet.Location.EndLine = i + 1
 				r = append(r, last.snippet)
 				stack = stack[0 : len(stack)-1]
 			} else {

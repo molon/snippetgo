@@ -23,6 +23,11 @@ func TestAll(t *testing.T) {
 				{
 					Name: "Helloworldprint",
 					Code: `fmt.Println(c)`,
+					Location: parse.Location{
+						File:      "./fixtures/simple.go",
+						StartLine: 11,
+						EndLine:   13,
+					},
 				},
 				{
 					Name: "Helloworld",
@@ -30,6 +35,11 @@ func TestAll(t *testing.T) {
 for _, c := range "Hello" {
 	fmt.Println(c)
 }`,
+					Location: parse.Location{
+						File:      "./fixtures/simple.go",
+						StartLine: 8,
+						EndLine:   15,
+					},
 				},
 			},
 		},
@@ -47,6 +57,11 @@ for _, c := range "Hello" {
 },
 
 props: ['value'],`,
+					Location: parse.Location{
+						File:      "./fixtures/hello.js",
+						StartLine: 3,
+						EndLine:   11,
+					},
 				},
 			},
 		},
